@@ -313,7 +313,6 @@ class PERFTOOLS_DLL_DECL MallocHook {
   }
   // End of DEPRECATED methods.
 
- private:
   // Slow path versions of Invoke*Hook.
   static void InvokeNewHookSlow(const void* p, size_t s);
   static void InvokeDeleteHookSlow(const void* p);
