@@ -15,6 +15,7 @@ Source: http://%{NAME}.googlecode.com/files/%{NAME}-%{VERSION}.tar.gz
 Distribution: Redhat 7 and above.
 Buildroot: %{_tmppath}/%{name}-root
 Prefix: %prefix
+Requires: libunwind
 
 %description
 The %name packages contains some utilities to improve and analyze the
@@ -25,6 +26,7 @@ malloc() and cpu and heap profiling utilities.
 Summary: Performance tools for C++
 Group: Development/Libraries
 Requires: %{NAME} = %{VERSION}
+Requires: libunwind-devel
 
 %description devel
 The %name-devel package contains static and debug libraries and header
@@ -46,7 +48,7 @@ files for developing applications that use the %name package.
 # I can't use '% configure', because it defines -m32 which breaks some
 # of the low-level atomicops files in this package.  But I do take
 # as much from % configure (in /usr/lib/rpm/macros) as I can.
-./configure --prefix=%{_prefix} --exec-prefix=%{_exec_prefix} --bindir=%{_bindir} --sbindir=%{_sbindir} --sysconfdir=%{_sysconfdir} --datadir=%{_datadir} --includedir=%{_includedir} --libdir=%{_libdir} --libexecdir=%{_libexecdir} --localstatedir=%{_localstatedir} --sharedstatedir=%{_sharedstatedir} --mandir=%{_mandir} --infodir=%{_infodir}
+./configure --prefix=%{_prefix} --exec-prefix=%{_exec_prefix} --bindir=%{_bindir} --sbindir=%{_sbindir} --sysconfdir=%{_sysconfdir} --datadir=%{_datadir} --includedir=%{_includedir} --libdir=%{_libdir} --libexecdir=%{_libexecdir} --localstatedir=%{_localstatedir} --sharedstatedir=%{_sharedstatedir} --mandir=%{_mandir} --infodir=%{_infodir} --enable-libunwind
 make
 
 %install
@@ -59,8 +61,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 
-%docdir %{prefix}/share/doc/%{NAME}-%{VERSION}
-%{prefix}/share/doc/%{NAME}-%{VERSION}/*
+%docdir %{prefix}/share/doc/%{NAME}
+%{prefix}/share/doc/%{NAME}/*
 
 %{_libdir}/*.so.*
 %{_bindir}/pprof
