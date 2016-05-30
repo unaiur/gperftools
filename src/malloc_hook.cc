@@ -661,12 +661,10 @@ extern "C" int MallocHook_GetCallerStackTrace(void** result, int max_depth,
       return depth;
     }
   }
-  RAW_LOG(WARNING, "Hooked allocator frame not found, returning empty trace");
-    // If this happens try increasing kMaxSkip
-    // or else something must be wrong with InHookCaller,
-    // e.g. for every section used in InHookCaller
-    // all functions in that section must be inside the same library.
-  return 0;
+  // If the hook was called from user code, return the full stack
+  if (depth > max_depth) depth = max_depth;
+  copy(stack, stack + depth, result);
+  return depth;
 #endif
 }
 
